@@ -1,0 +1,90 @@
+@font-face {
+  font-family: "FlowersRuby";
+  src: local("Ume P Gothic"), url("fonts/ume-pgo4.ttf");
+}
+
+@font-face {
+  font-family: "FlowersText";
+  src: local("IPAmjMincho"), url("fonts/ipamjm.ttf");
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#container:not(:fullscreen)>#flowers {
+  width: 1280px;
+  height: 720px;
+}
+
+#container:fullscreen {
+  background-color: white;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#flowers:not(.loaded) {
+  display: grid;
+  align-items: center;
+  background-color: rgb(240, 255, 255);
+}
+
+#notify {
+  margin-left: 2em;
+}
+
+#placeholder {
+  font-size: larger;
+  text-align: center;
+  animation: text-flash 1s infinite;
+}
+
+@keyframes text-flash {
+  0% {
+    color: black;
+  }
+
+  50% {
+    color: whitesmoke;
+  }
+
+  100% {
+    color: black;
+  }
+}
+
+@keyframes bg-flash-red {
+  0% {
+    background-color: white;
+    color: black
+  }
+
+  50% {
+    background-color: red;
+    color: white
+  }
+
+  100% {
+    background-color: white;
+    color: black;
+  }
+}
+
+#verticaltitle {
+  padding-left: 1em;
+  display: none;
+}
+
+@media screen and (orientation: portrait) {
+  :fullscreen #verticaltitle {
+    display: block;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  :fullscreen #flowers {
+    margin: auto;
+  }
+}

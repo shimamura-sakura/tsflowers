@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "strict": true,
+        "removeComments": true,
+        "outFile": "index.js",
+        "sourceMap": true
+    },
+    "files": [
+        "0-base.ts",
+        "1-stage.ts",
+        "2-dialog.ts",
+        "3-others.ts",
+        "4-game.ts"
+    ],
+}

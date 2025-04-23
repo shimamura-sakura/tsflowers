@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="utf-8" />
+  <title>FLOWERS - Printemps</title>
+  <link rel="stylesheet" href="index.css" />
+  <body>
+    <button onclick="container.requestFullscreen()">全屏</button>
+    <div id="container">
+      <h1 id="verticaltitle">FLOWERS</h1>
+      <div id="flowers" onclick="this.onclick=null;this.className='loaded';flStart()" lang="ja_JP">
+        <div id="placeholder" lang="zh_CN">点击开始</div>
+      </div>
+      <label><input id="skipCheck" type="checkbox" onchange="fl.setSkip(this.checked)" autocomplete="off" />Skip(Ctrl)</label>
+      <label><input id="autoCheck" type="checkbox" onchange="fl.setAuto(this.checked)" autocomplete="off" />Auto(A)</label>
+      <span id="notify"><i>这里将会显示信息</i></span>
+      <ul id="savelist">
+        <div>存档列表</div>
+        <li id="firstload">
+          <button id="save">保存</button>
+          <input id="savetext" placeholder="将存档粘贴到此，点击加载" size="24" autocomplete="off" />
+          <button id="load">加载</button>
+        </li>
+      </ul>
+    </div>
+    <script src="index.js"></script>
+    <script src="game_printemps/scripts.js"></script>
+    <script>
+      const fl = new Flowers(new MyFS(false, 'game_printemps', 'op.mpg', 'gf.mpg'), game_script, {});
+    </script>
+    <script src="index-1.js"></script>
+  </body>
+</html>
