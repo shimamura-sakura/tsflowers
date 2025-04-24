@@ -57,7 +57,9 @@ const G = {
       img.src = src;
     });
     return img;
-  }
+  },
+  specialScripts: {} as GameScript,
+  sys: {} as { [k: string]: string }
 };
 
 class MyFS {

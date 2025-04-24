@@ -8,7 +8,7 @@ class MyVideo {
     Object.assign(this.root, { autoplay: true, controls: true });
     Object.assign(this.root.style, G.whStyle, G.videoStyle);
     this.root.addEventListener('ended', () => this.cancel(true));
-    this.root.addEventListener('click', ev => ev.stopPropagation());
+    this.root.addEventListener('click', (ev) => ev.stopPropagation());
     this.cancel();
   }
   cancel(finish?: boolean) {

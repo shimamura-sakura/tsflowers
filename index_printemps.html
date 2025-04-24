@@ -6,7 +6,7 @@
   <body>
     <button onclick="container.requestFullscreen()">全屏</button>
     <div id="container">
-      <h1 id="verticaltitle">FLOWERS</h1>
+      <h1 id="verticaltitle">FLOWERS - PRINTEMPS</h1>
       <div id="flowers" onclick="this.onclick=null;this.className='loaded';flStart()" lang="ja_JP">
         <div id="placeholder" lang="zh_CN">点击开始</div>
       </div>
@@ -25,7 +25,7 @@
     <script src="index.js"></script>
     <script src="game_printemps/scripts.js"></script>
     <script>
-      const fl = new Flowers(new MyFS(false, 'game_printemps', 'op.mpg', 'gf.mpg'), game_script, {});
+      const fl = new Flowers(new MyFS(true, 'game_printemps', 'op.mpg', 'gf.mpg'), game_script);
     </script>
     <script src="index-1.js"></script>
   </body>

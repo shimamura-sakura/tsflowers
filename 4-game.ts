@@ -14,8 +14,7 @@ type WaitKind =
   | 'clickVoice'
   | 'clickTime'
   | 'choice'
-  | 'investigate'
-  | 'exit';
+  | 'investigate';
 
 class Flowers {
   root = document.createElement('div');
@@ -27,16 +26,10 @@ class Flowers {
   private dlg = new TextDlg(this.stg.avat.root);
   private fs: MyFS;
   private scriptFiles: GameScript;
-  private specialScripts: GameScript;
   private investigateScript: null | string = null;
   private cancelEvName = 'can-' + Math.random().toString(16).substring(2);
   private finishEvName = 'fin-' + Math.random().toString(16).substring(2);
-  constructor(
-    fs: MyFS,
-    scriptFiles: GameScript,
-    specialScripts: GameScript,
-    investigate?: { script: string; svg: string }
-  ) {
+  constructor(fs: MyFS, scriptFiles: GameScript, investigate?: { script: string; svg: string }) {
     Object.assign(this.root.style, G.whStyle, { position: 'relative', transformOrigin: '0 0' });
     this.root.append(this.stg.root, this.dlg.root, this.sel.root, this.inv.root, this.vid.root);
     this.root.addEventListener('click', () => {
@@ -45,7 +38,6 @@ class Flowers {
     });
     this.fs = fs;
     this.scriptFiles = scriptFiles;
-    this.specialScripts = specialScripts;
     if (investigate) {
       this.inv.setSVG(investigate.svg);
       this.investigateScript = investigate.script;
@@ -110,9 +102,6 @@ class Flowers {
           this.jump(null, this.investigateScript);
         } else throw new Error('trying to start investigation in a game without investigation');
         break;
-      case 'exit':
-        await this.waitCancel();
-        break;
     }
     this.currWait = null;
   }
@@ -173,7 +162,7 @@ class Flowers {
     if (this.running) return;
     if (this.file == '') {
       this.running = true;
-      this.jump(null, 'start.s');
+      this.jump(G.sys.lblStart, G.sys.sysScript);
     }
     while (this.running) {
       this.beforeWait?.();
@@ -194,10 +183,10 @@ class Flowers {
   }
   private jump(label: string | null, file?: string) {
     if (file) {
-      if (!(file in this.scriptFiles || file in this.specialScripts)) throw Error(`script ${file} not found`);
+      if (!(file in this.scriptFiles || file in G.specialScripts)) throw Error(`script ${file} not found`);
       this.pc = 0;
       this.file = file;
-      this.code = this.scriptFiles[file] || this.specialScripts[file];
+      this.code = this.scriptFiles[file] || G.specialScripts[file];
       this.lbls = {};
       this.code.forEach((line, i) => {
         if (typeof line == 'string') this.lbls[line] = i;
@@ -216,7 +205,8 @@ class Flowers {
         // 1. Control
         // 1.1 Variable and Control Flow
         case 'exit':
-          return void (this.currWait = { k: 'exit' });
+          this.jump(G.sys.lblExit, G.sys.sysScript);
+          break;
         case 'varSet':
           this.vars[arg.idx] = arg.val;
           break;
@@ -419,7 +409,7 @@ class Flowers {
           throw new Error('unknown instruction');
       }
     }
-    return void (this.currWait = { k: 'exit' });
+    return this.jump(G.sys.lblExit, G.sys.sysScript);
   }
   async save(): Promise<FlowersSave> {
     if (this.inRunUntilWait) await new Promise<void>((resolve) => (this.beforeWait = resolve));
