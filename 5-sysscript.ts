@@ -1,23 +1,56 @@
-G.specialScripts[(G.sys.sysScript = '_system')] = [
-  (G.sys.lblStart = 'start'),
-  { bg_0f: { filename: '../system/LOGO1.bmp' } },
-  { crossfade: { duration: 200 } },
-  { dialogFade: { visible: 1, duration: 200 } },
-  { dialog: { text: '游戏已启动，现在你可以加载存档或点击开始游戏' } },
-  { jump: { label: 'startGame' } },
-
-  (G.sys.lblExit = 'onExit'),
-  { bg_0f: { filename: '../system/LOGO1.bmp' } },
-  { crossfade: { duration: 200 } },
-  { dialogFade: { visible: 1, duration: 200 } },
-  { dialog: { text: '游戏结束，现在你可以加载存档或点击重新开始游戏' } },
-  { jump: { label: 'startGame' } },
-
-  'startGame',
-  { selBeg: {} },
-  { selAdd: { text: '开始游戏', label: 'startGameReal' } },
-  { selEnd: {} },
-  'startGameReal',
-  { dialogVisible: { visible: false } },
-  { jumpScript: { filename: 'start.s' } }
-];
+{
+  G.sys.lblExit = 'scrExit';
+  G.sys.lblStart = 'sysStart';
+  const dlgHide: CodeInst[] = [{ dialogFade: { visible: 0, duration: 200 } }, { dialogClear: {} }];
+  const dlgShow: CodeInst[] = [{ dialogClear: {} }, { dialogFade: { visible: 1, duration: 200 } }];
+  G.specialScripts[(G.sys.sysScript = '_system')] = [
+    // on exit
+    G.sys.lblExit,
+    { dialog: { text: '游戏结束，回到启动画面' } },
+    ...dlgHide,
+    { jump: { label: G.sys.lblStart } },
+    // system start
+    G.sys.lblStart,
+    { varSet: { idx: 100, val: 128 } },
+    { yuri: { action: 1 } },
+    { bgColor: { bgr: [0, 0, 0] } },
+    { crossfade: { duration: 200 } },
+    { jump: { label: 'startMenu' } },
+    'igStart', // play ig start
+    ...dlgHide,
+    { bgColor: { bgr: [0, 0, 0] } },
+    { crossfade: { duration: 1 } },
+    { bg_0f: { filename: '../system/LOGO1.bmp' } },
+    { crossfade: { duration: 5000 } },
+    { waitTime: { duration: 1000 } },
+    { bg_0f: { filename: '../system/LOGO2.bmp' } },
+    { crossfade: { duration: 5000 } },
+    { waitTime: { duration: 1000 } },
+    { bg_0f: { filename: '../system/CAUTION01.bmp' } },
+    { crossfade: { duration: 5000 } },
+    { bgColor: { bgr: [0, 0, 0] } },
+    { crossfade: { duration: 5000 } },
+    { jump: { label: 'startMenu' } },
+    'opVideo',
+    ...dlgHide,
+    { video: { kind: 0 } },
+    { jump: { label: 'startMenu' } },
+    'startMenu',
+    ...dlgShow,
+    { dialog: { text: '游戏已启动，现在你可以加载存档或新开始游戏' } },
+    { selBeg: {} },
+    { selAdd: { text: '开始游戏', label: 'startGame' } },
+    { selAdd: { text: '播放IG启动画面', label: 'igStart' } },
+    { selAdd: { text: '播放OP视频', label: 'opVideo' } },
+    { selAdd: { text: '其他', label: 'startMenuOther' } },
+    { selEnd: {} },
+    'startGame',
+    ...dlgHide,
+    { jumpScript: { filename: 'start.s' } },
+    'startMenuOther',
+    ...dlgHide,
+    { selBeg: {} },
+    { selAdd: { text: '返回启动菜单', label: 'startMenu' } },
+    { selEnd: {} }
+  ];
+}

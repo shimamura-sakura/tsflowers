@@ -171,7 +171,7 @@ class ChoiceWindow {
     this.cancelChoice();
   }
   loadRes(fs: MyFS) {
-    this.btns.forEach((e, i) => Object.assign(e.style, G.chBtnStyle(i, fs)));
+    this.btns.forEach((e, i) => Object.assign(e.style, G.chBtnStyle(fs)));
   }
   private cancelChoice() {
     this.root.style.display = 'none';
@@ -192,6 +192,7 @@ class ChoiceWindow {
     if (sels.length == 0) return;
     this.curr = sels = sels.slice(0, Math.min(sels.length, this.btns.length));
     sels.forEach(({ text, label }, i) => {
+      Object.assign(this.btns[i].style, G.chBtnPos(i, sels.length));
       this.btns[i].style.display = 'block';
       this.btns[i].dataset.label = label;
       this.btns[i].innerText = text;

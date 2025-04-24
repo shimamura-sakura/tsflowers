@@ -35,18 +35,20 @@ const G = {
   typerMsPerChar: 50,
   timeAfterVoice: 1000,
   choiceStyle: (c: string) => `.${c}:hover{background-position-y:147px}`,
-  chBtnStyle: (i: number, fs: MyFS) => ({
+  chBtnStyle: (fs: MyFS) => ({
     width: '908px',
     height: '74px',
     fontSize: '26px',
     lineHeight: '74px',
     fontFamily: 'FlowersText',
     position: 'absolute',
-    top: `${186 + i * 78}px`,
-    left: `${132 + i * 80}px`,
     backgroundImage: `url(${fs.system('select_p.png')})`,
     textAlign: 'center'
   }),
+  chBtnPos: (i: number, n: number) => {
+    if (n > 3) i -= n - 3;
+    return { top: `${186 + i * 78}px`, left: `${132 + i * 80}px` };
+  },
   videoStyle: { position: 'absolute', zIndex: '2' },
   async loadImg(src: string, img?: HTMLImageElement) {
     img ||= new Image();
