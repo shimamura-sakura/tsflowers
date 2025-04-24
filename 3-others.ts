@@ -155,7 +155,7 @@ class ChoiceWindow {
   root = document.createElement('div');
   curr: null | MyChoice[] = null;
   result = Promise.reject<string>("don't worry, this is just an initial value");
-  private btns = [0, 1, 2, 3].map(() => document.createElement('div'));
+  private btns = [0, 1, 2, 3, 4, 5].map(() => document.createElement('div'));
   private prom: null | { resolve: (v: string) => void; reject: () => void } = null;
   constructor() {
     this.root.style.position = 'absolute';
