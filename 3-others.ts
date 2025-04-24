@@ -5,9 +5,10 @@ class MyVideo {
   finished = Promise.resolve();
   curr: null | { src: string; mime?: string; resolve: () => void; reject: () => void } = null;
   constructor() {
-    Object.assign(this.root, { autoplay: true, controls: false });
+    Object.assign(this.root, { autoplay: true, controls: true });
     Object.assign(this.root.style, G.whStyle, G.videoStyle);
     this.root.addEventListener('ended', () => this.cancel(true));
+    this.root.addEventListener('click', ev => ev.stopPropagation());
     this.cancel();
   }
   cancel(finish?: boolean) {
