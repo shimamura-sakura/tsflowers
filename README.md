@@ -8,8 +8,7 @@
 我没有准备秋的相关脚本，请模仿其他三作自行编写
 
 0. 字体(放入 fonts 文件夹; 括号中是 archlinux 包名)
-   1. IPAmj 明朝(otf-ipamjfont): ipamjm.ttf
-   2. 梅ゴシック(ttf-ume): ume-pgo4.ttf
+   Noto Serif(noto-fonts-cjk): NotoSerifCJK-Regular.ttc
 1. 图片、视频、音频
    1. 将相应 IGA 文件(除 script.iga)解压到 game_printemps 的对应文件夹中
    2. 将视频重新编码为 webm (浏览器不支持原游戏使用的 mpeg)  
