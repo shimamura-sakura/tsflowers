@@ -7,8 +7,8 @@
     <button onclick="container.requestFullscreen()">全屏</button>
     <div id="container">
       <h1 id="verticaltitle">FLOWERS - HIVER</h1>
-      <div id="flowers" onclick="this.onclick=null;this.className='loaded';flStart()" lang="ja_JP">
-        <div id="placeholder" lang="zh_CN">点击开始</div>
+      <div id="flowers" onclick="this.onclick=null;this.className='loaded';flStart()">
+        <div id="placeholder">点击开始</div>
       </div>
       <label><input id="skipCheck" type="checkbox" onchange="fl.setSkip(this.checked)" autocomplete="off" />Skip(Ctrl)</label>
       <label><input id="autoCheck" type="checkbox" onchange="fl.setAuto(this.checked)" autocomplete="off" />Auto(A)</label>
@@ -25,7 +25,7 @@
     <script src="index.js"></script>
     <script src="game_hiver/scripts.js"></script>
     <script>
-      const fl = new Flowers(new MyFS(true, 'game_hiver', 'op.mpg', 'gf.mpg'), game_script);
+      const fl = new Flowers(new MyFS(true, 'game_hiver', 'op.mpg', 'gf.mpg', 'op2.mpg'), game_script);
     </script>
     <script src="index-1.js"></script>
   </body>

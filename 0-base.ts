@@ -95,7 +95,7 @@ class MyFS {
     return this.fg(filename);
   }
   video(i: number) {
-    const filename = this.videos[i] || 'op.mpg';
+    const filename = this.videos[i] || this.videos[0];
     return this.toSmallFilename(`${this.root}/video/${filename}`);
   }
   toSmallFilename(s: string) {
