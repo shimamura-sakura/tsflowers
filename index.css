@@ -1,11 +1,11 @@
 @font-face {
   font-family: "FlowersRuby";
-  src: local('Source Han Serif'), local("Ume P Gothic"), url("fonts/ume-pgo4.ttf");
+  src: local("Ume P Gothic"), url("fonts/ume-pgo4.ttf");
 }
 
 @font-face {
   font-family: "FlowersText";
-  src: local('Source Han Serif'), local("IPAmjMincho"), url("fonts/ipamjm.ttf");
+  src: local("IPAmjMincho"), url("fonts/ipamjm.ttf");
 }
 
 html,
