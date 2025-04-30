@@ -88,3 +88,11 @@ body {
     margin: auto;
   }
 }
+
+svg>* {
+  opacity: 75%;
+}
+
+svg>*:hover {
+  opacity: 100%;
+}
