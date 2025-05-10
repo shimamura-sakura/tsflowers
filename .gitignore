@@ -1,4 +1,5 @@
 fonts/**/*
+game_*/*.sh
 game_*/**/*.bmp
 game_*/**/*.png
 game_*/**/*.ogg
