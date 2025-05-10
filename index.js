@@ -1509,7 +1509,7 @@ class Flowers {
         { selBeg: {} },
         { selAdd: { text: '开始游戏', label: 'startGame' } },
         { selAdd: { text: 'IG启动画面', label: 'igStart' } },
-        { selAdd: { text: '播放视频', label: 'startMenuVideo' } },
+        { selAdd: { text: '功能测试', label: 'startMenuVideo' } },
         { selEnd: {} },
         'startGame',
         ...dlgHide,
