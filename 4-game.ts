@@ -172,7 +172,7 @@ class Flowers {
         try {
           await this.doWait();
         } catch (e) {
-          console.log('load save when waiting');
+          console.log('load save when waiting', e);
         }
       } else {
         this.inRunUntilWait = true;
@@ -244,7 +244,10 @@ class Flowers {
         // 1.3 Investigation
         case 'startInvestigate':
         case 'investigateRet':
-          this.inv.show();
+          if (!this.investigateScript) {
+            this.jump(G.sys.lblErrInv, G.sys.sysScript);
+            break;
+          } else this.inv.show();
           return void (this.currWait = { k: 'investigate' });
         case 'zeroInvItemTimes':
           this.invN = {};

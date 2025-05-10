@@ -26,7 +26,8 @@ class MyImg extends Image {
   }
   async loadSrc() {
     await G.loadImg(this.nextSrc || MyImg.Empty, this);
-    return this.decode();
+    try { await this.decode(); } catch { console.log('error loading src'); }
+    return 
   }
   async load(s: ImgSave) {
     this.setImage(s.src);

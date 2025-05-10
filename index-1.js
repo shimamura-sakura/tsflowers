@@ -148,3 +148,4 @@ document.body.onkeydown = document.body.onkeyup = function (ev) {
   }
 };
 loadFromStor();
+// for electron: flStart();

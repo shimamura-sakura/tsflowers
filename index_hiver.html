@@ -4,12 +4,12 @@
   <title>FLOWERS - Hiver</title>
   <link rel="stylesheet" href="index.css" />
   <body>
-    <button onclick="container.requestFullscreen()">全屏</button>
     <div id="container">
       <h1 id="verticaltitle">FLOWERS - HIVER</h1>
       <div id="flowers" onclick="this.onclick=null;this.className='loaded';flStart()">
         <div id="placeholder">点击开始</div>
       </div>
+      <button id="fullscreenbtn" onclick="container.requestFullscreen()">全屏</button>
       <label><input id="skipCheck" type="checkbox" onchange="fl.setSkip(this.checked)" autocomplete="off" />Skip(Ctrl)</label>
       <label><input id="autoCheck" type="checkbox" onchange="fl.setAuto(this.checked)" autocomplete="off" />Auto(A)</label>
       <span id="notify"><i>这里将会显示信息</i></span>
@@ -21,6 +21,7 @@
           <button id="load">加载</button>
         </li>
       </ul>
+      <a href="index.html">返回游戏列表</a>
     </div>
     <script src="index.js"></script>
     <script src="game_hiver/scripts.js"></script>

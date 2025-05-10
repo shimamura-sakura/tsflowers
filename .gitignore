@@ -1,2 +1,13 @@
-index.js
-index.js.map
+fonts/**/*
+game_*/**/*.bmp
+game_*/**/*.png
+game_*/**/*.ogg
+game_*/**/*.mpg
+game_*/**/*.webm
+game_*/**/*.webp
+game_*/**/*.opus
+game_*/scripts.js
+game_hiver/system/search01mask.msk
+make_script/**/*.s
+package-lock.json
+node_modules

@@ -10,8 +10,15 @@
 
 html,
 body {
-  margin: 0;
-  padding: 0;
+  /* enable below for electron */
+  /* margin: 0;
+  padding: 0; */
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+#container:fullscreen>#fullscreenbtn {
+  display:none;
 }
 
 #container:not(:fullscreen)>#flowers {
@@ -21,7 +28,7 @@ body {
 
 #container:fullscreen {
   background-color: white;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 

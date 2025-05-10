@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="index.css" />
   <body>
     <div id="container">
-      <h1 id="verticaltitle">FLOWERS - PRINTEMPS</h1>
+      <h1 id="verticaltitle">FLOWERS - AUTOMNE</h1>
       <div id="flowers" onclick="this.onclick=null;this.className='loaded';flStart()">
         <div id="placeholder">点击开始</div>
       </div>
@@ -24,9 +24,9 @@
       <a href="index.html">返回游戏列表</a>
     </div>
     <script src="index.js"></script>
-    <script src="game_printemps/scripts.js"></script>
+    <script src="game_automne/scripts.js"></script>
     <script>
-      const fl = new Flowers(new MyFS(true, 'game_printemps', 'op.mpg'), game_script);
+      const fl = new Flowers(new MyFS(false, 'game_automne', 'op.mpg'), game_script);
     </script>
     <script src="index-1.js"></script>
   </body>

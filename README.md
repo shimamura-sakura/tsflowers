@@ -4,8 +4,7 @@
 
 # 准备资源
 
-下文中请使用你的游戏名(春 printemps, 夏 ete, 秋 automne, 冬 hiver)  
-我没有准备秋的相关脚本，请模仿其他三作自行编写
+下文中请使用你的游戏名(春 printemps, 夏 ete, 秋 automne, 冬 hiver)
 
 0. 字体(放入 fonts 文件夹; 括号中是 archlinux 包名)
    Noto Serif(noto-fonts-cjk): NotoSerifCJK-Regular.ttc
@@ -27,7 +26,7 @@
 
 # 编译/运行
 
-使用 `tsc` 编译 typescript 程序，生成 index.js
+~~使用 `tsc` 编译 typescript 程序，生成 index.js~~（为方便起见，在仓库中留一个编译好的版本）
 
 使用任意网页服务器提供本文件夹，不要从本地直接打开(由于同源策略，这样没有声音)
 

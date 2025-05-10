@@ -124,7 +124,7 @@ class Typewriter {
   }
   constructor() {
     setInterval(() => this.typeOne(), G.typerMsPerChar);
-    Object.assign(this.root.style, { position: 'absolute', overflow: 'auto' });
+    Object.assign(this.root.style, { position: 'absolute', overflow: 'auto', scrollbarWidth: 'none' });
   }
   private typeOne() {
     if (this.curr == null || this.curr.iseg >= this.curr.segs.length) {

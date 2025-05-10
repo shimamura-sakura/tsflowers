@@ -1,6 +1,7 @@
 {
   G.sys.lblExit = 'scrExit';
   G.sys.lblStart = 'sysStart';
+  G.sys.lblErrInv = 'errNoInv';
   const dlgHide: CodeInst[] = [{ dialogFade: { visible: 0, duration: 200 } }, { dialogClear: {} }];
   const dlgShow: CodeInst[] = [{ dialogClear: {} }, { dialogFade: { visible: 1, duration: 200 } }];
   G.specialScripts[(G.sys.sysScript = '_system')] = [
@@ -69,5 +70,9 @@
     { "varSet": { "idx": 104, "val": 0 } },
     { "zeroInvItemTimes": {} },
     { "startInvestigate": { "idx": 1 } },
+    G.sys.lblErrInv,
+    { dialog: { text: '错误：当前游戏没有调查环节，现在返回启动界面' } },
+    ...dlgHide,
+    { jump: { label: G.sys.lblStart } },
   ];
 }

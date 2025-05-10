@@ -4,7 +4,8 @@
         "strict": true,
         "removeComments": true,
         "outFile": "index.js",
-        "sourceMap": true
+        "sourceMap": true,
+        "skipLibCheck": true,
     },
     "files": [
         "0-base.ts",
