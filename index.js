@@ -47,8 +47,8 @@ const G = {
         textAlign: 'center'
     }),
     chBtnPos: (i, n) => {
-        if (n > 3)
-            i -= n - 3;
+        if (n > 4)
+            i -= n - 4;
         return { top: `${186 + i * 78}px`, left: `${132 + i * 80}px` };
     },
     videoStyle: { position: 'absolute', zIndex: '2' },
