@@ -18,7 +18,7 @@
       1. 运行 make_compress_script.sh 生成 3 个脚本，分别将 png, bmp, ogg 转换为 webp, opus 格式  
          **注意：在运行前请检查脚本内容**
       2. (可选)删除 png, bmp, ogg 文件
-      3. 在 index_xxx.html 中将 MyFS 后的 false 改为 true 以使用压缩后的文件名
+      3. 在 index_xxx.html 中将 MyFS 后的 true 改为 false 以使用压缩前的文件名
 2. 脚本
    1. 进入 make_script, `npm install iconv-cp932` 安装依赖
    2. 将 script.iga 解压到 make_script/scripts_printemps
