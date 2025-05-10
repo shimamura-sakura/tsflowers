@@ -130,7 +130,7 @@ document.body.onkeydown = document.body.onkeyup = function (ev) {
   const k = ev.key.toLowerCase();
   const d = ev.type == 'keydown';
   switch (k) {
-    case 'control':
+    case 'x':
       fl.setSkip(d);
       break;
     case 'a':
