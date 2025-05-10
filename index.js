@@ -1533,7 +1533,7 @@ class Flowers {
         { video: { kind: 1 } },
         { jump: { label: 'startMenu' } },
         'testInv',
-        { "bg_0f": { "layer": 1, "filename": "cut08c.bmp" } },
+        { "bg_0f": { filename: '../system/LOGO1.bmp' } },
         { "crossfade": { "duration": 1000 } },
         { "dialog": { "text": "私が気付いた、この二人の共通点は二つ――" }, "__afterString": [0, 60, 130, 179] },
         { "varSet": { "idx": 103, "val": 0 } },
