@@ -9,7 +9,8 @@
 }
 
 html,
-body {
+body,
+#container {
   /* enable below for electron */
   /* margin: 0;
   padding: 0; */

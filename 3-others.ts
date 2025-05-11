@@ -244,8 +244,9 @@ class Investigate {
   private onclick(ev: MouseEvent) {
     if (!this.msk) return;
     const b = this.root.getBoundingClientRect();
-    const x = Math.floor(ev.offsetX / b.width * 1280);
-    const y = Math.floor(ev.offsetY / b.height * 720);
+    const x = Math.floor((ev.pageX - b.left) / b.width * 1280);
+    const y = Math.floor((ev.pageY - b.top) / b.height * 720);
+    console.log(ev, b);
     const i = y * 1280 + x;
     if (i >= this.msk.length) return;
     if (this.msk[i] == 0) return;

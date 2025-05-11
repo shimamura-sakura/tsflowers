@@ -1,21 +1,21 @@
 const elflowers = document.getElementById('flowers');
 const container = document.getElementById('container');
-container.addEventListener('fullscreenchange', (ev) => {
+container.addEventListener('fullscreenchange', fsResize);
+window.addEventListener('resize', fsResize);
+function fsResize(ev) {
   if (!document.fullscreenElement) {
     fl.root.style.removeProperty('scale');
     elflowers.style.removeProperty('width');
     elflowers.style.removeProperty('height');
     elflowers.style.removeProperty('padding');
+  } else {
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    const s = Math.min(w / 1280, h / 720);
+    fl.root.style.scale = s.toString();
+    Object.assign(elflowers.style, { width: `${1280 * s}px`, height: `${720 * s}px` });
   }
-});
-window.addEventListener('resize', (ev) => {
-  if (!document.fullscreenElement) return;
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  const s = Math.min(w / 1280, h / 720);
-  fl.root.style.scale = s.toString();
-  Object.assign(elflowers.style, { width: `${1280 * s}px`, height: `${720 * s}px` });
-});
+}
 fl.autoCheck = document.getElementById('autoCheck');
 fl.skipCheck = document.getElementById('skipCheck');
 let flStarted = false;
