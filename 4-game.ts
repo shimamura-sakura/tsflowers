@@ -1,9 +1,9 @@
 type CodeLine = string | CodeInst;
-type CodeInst = { [op: string]: { [k: string]: any } };
-type DataVars = { [idx: number]: number };
-type InvCount = { [idx: number]: number };
-type GameScript = { [file: string]: CodeLine[] };
-type Waiting = { k: WaitKind; o?: any };
+type CodeInst = { [op: string]: { [k: string]: any; }; };
+type DataVars = { [idx: number]: number; };
+type InvCount = { [idx: number]: number; };
+type GameScript = { [file: string]: CodeLine[]; };
+type Waiting = { k: WaitKind; o?: any; };
 type WaitKind =
   | 'stageFade'
   | 'stageFlash'
@@ -29,7 +29,7 @@ class Flowers {
   private investigateScript: null | string = null;
   private cancelEvName = 'can-' + Math.random().toString(16).substring(2);
   private finishEvName = 'fin-' + Math.random().toString(16).substring(2);
-  constructor(fs: MyFS, scriptFiles: GameScript, investigate?: { script: string; svg: string }) {
+  constructor(fs: MyFS, scriptFiles: GameScript, investigate?: { script: string; svg: string; }) {
     Object.assign(this.root.style, G.whStyle, { position: 'relative', transformOrigin: '0 0' });
     this.root.append(this.stg.root, this.dlg.root, this.sel.root, this.inv.root, this.vid.root);
     this.root.addEventListener('click', () => {
@@ -150,7 +150,7 @@ class Flowers {
   private file: string = '';
   private code: CodeLine[] = [];
   private sels: MyChoice[] = [];
-  private lbls: { [label: string]: number } = {};
+  private lbls: { [label: string]: number; } = {};
   private vars: DataVars = {};
   private invN: InvCount = {};
   private invI: number = 0;
