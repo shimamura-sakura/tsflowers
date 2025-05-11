@@ -19,18 +19,22 @@ const G = {
     clipPath: 'circle(50px)'
   },
   yuriStartLevel: 4,
-  dRootFont: '26px FlowersText',
-  dRubyStyle: (c: string) => `.${c}{ruby-align:center;line-height:46px}rt{font:12px FlowersRuby}`,
+  dRubyStyle: (c: string) => `.${c} ruby{position:relative}
+  .${c}{font:26px FlowersText;line-height:46px;ruby-align:center}
+  .${c} rt{font:12px FlowersRuby;display:inline-block;position:absolute}
+  .${c} .hori rt{top:-1em;left:0px}.${c} .vert rt{top:0.2em;right:-1em}
+  .${c} .person{line-height:1;}
+  `,
   personStyle: { position: 'absolute', right: '962px', bottom: '123px', zIndex: '1' },
   dialogStyles: ['left', 'right', 'top', 'bottom', 'width', 'writing-mode', 'padding'],
   dialogVStyle: { right: '100px', top: '100px', left: '100px', bottom: '100px', writingMode: 'vertical-rl' },
   dialogHStyle: {
     left: '340px',
-    top: '550px',
+    top: '540px',
     width: '700px',
     bottom: '23px',
     writingMode: 'horizontal-tb',
-    padding: '10px 0 0 0'
+    padding: '20px 0 0 0'
   },
   typerMsPerChar: 50,
   timeAfterVoice: 1000,

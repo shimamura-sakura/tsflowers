@@ -204,16 +204,17 @@ class TextDlg {
   fade: null | { d: number; a: Animation; } = null;
   constructor(avatar: HTMLElement) {
     this.setVisible((this.visible = false));
-    this.root.appendChild(document.createElement('style')).innerText = G.dRubyStyle(
-      (this.type.root.className = 'cls-' + Math.random().toString(16).substring(2))
+    this.root.appendChild(document.createElement('style')).innerHTML = G.dRubyStyle(
+      (this.root.className = 'cls-' + Math.random().toString(16).substring(2))
     );
-    Object.assign(this.root.style, G.whStyle, { position: 'absolute', font: G.dRootFont });
+    Object.assign(this.root.style, G.whStyle, { position: 'absolute' });
     Object.assign(this.hori.style, G.whStyle, { position: 'absolute' });
     Object.assign(this.vert.style, G.whStyle, { position: 'absolute' });
     Object.assign(this.hori.appendChild(avatar).style, G.axyStyle);
     Object.assign(this.hori.appendChild(this.person).style, G.personStyle);
     this.root.append(this.hori, this.vert, this.type.root);
     this.hori.append(this.yuri.root);
+    this.person.className = 'person';
     this.setMode((this.isVert = false));
   }
   async loadRes(fs: MyFS) {
@@ -228,6 +229,7 @@ class TextDlg {
     Object.assign(wFrame.style, G.hWFrStyle);
   }
   private typeSetMode(vert: boolean) {
+    this.type.root.classList = vert ? 'vert' : 'hori';
     G.dialogStyles.forEach((n) => this.type.root.style.removeProperty(n));
     Object.assign(this.type.root.style, vert ? G.dialogVStyle : G.dialogHStyle);
   }

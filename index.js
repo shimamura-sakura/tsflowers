@@ -20,18 +20,22 @@ const G = {
         clipPath: 'circle(50px)'
     },
     yuriStartLevel: 4,
-    dRootFont: '26px FlowersText',
-    dRubyStyle: (c) => `.${c}{ruby-align:center;line-height:46px}rt{font:12px FlowersRuby}`,
+    dRubyStyle: (c) => `.${c} ruby{position:relative}
+  .${c}{font:26px FlowersText;line-height:46px;ruby-align:center}
+  .${c} rt{font:12px FlowersRuby;display:inline-block;position:absolute}
+  .${c} .hori rt{top:-1em;left:0px}.${c} .vert rt{top:0.2em;right:-1em}
+  .${c} .person{line-height:1;}
+  `,
     personStyle: { position: 'absolute', right: '962px', bottom: '123px', zIndex: '1' },
     dialogStyles: ['left', 'right', 'top', 'bottom', 'width', 'writing-mode', 'padding'],
     dialogVStyle: { right: '100px', top: '100px', left: '100px', bottom: '100px', writingMode: 'vertical-rl' },
     dialogHStyle: {
         left: '340px',
-        top: '550px',
+        top: '540px',
         width: '700px',
         bottom: '23px',
         writingMode: 'horizontal-tb',
-        padding: '10px 0 0 0'
+        padding: '20px 0 0 0'
     },
     typerMsPerChar: 50,
     timeAfterVoice: 1000,
@@ -660,14 +664,15 @@ class TextDlg {
     fade = null;
     constructor(avatar) {
         this.setVisible((this.visible = false));
-        this.root.appendChild(document.createElement('style')).innerText = G.dRubyStyle((this.type.root.className = 'cls-' + Math.random().toString(16).substring(2)));
-        Object.assign(this.root.style, G.whStyle, { position: 'absolute', font: G.dRootFont });
+        this.root.appendChild(document.createElement('style')).innerHTML = G.dRubyStyle((this.root.className = 'cls-' + Math.random().toString(16).substring(2)));
+        Object.assign(this.root.style, G.whStyle, { position: 'absolute' });
         Object.assign(this.hori.style, G.whStyle, { position: 'absolute' });
         Object.assign(this.vert.style, G.whStyle, { position: 'absolute' });
         Object.assign(this.hori.appendChild(avatar).style, G.axyStyle);
         Object.assign(this.hori.appendChild(this.person).style, G.personStyle);
         this.root.append(this.hori, this.vert, this.type.root);
         this.hori.append(this.yuri.root);
+        this.person.className = 'person';
         this.setMode((this.isVert = false));
     }
     async loadRes(fs) {
@@ -682,6 +687,7 @@ class TextDlg {
         Object.assign(wFrame.style, G.hWFrStyle);
     }
     typeSetMode(vert) {
+        this.type.root.classList = vert ? 'vert' : 'hori';
         G.dialogStyles.forEach((n) => this.type.root.style.removeProperty(n));
         Object.assign(this.type.root.style, vert ? G.dialogVStyle : G.dialogHStyle);
     }
