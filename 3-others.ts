@@ -48,6 +48,7 @@ class MySoundChan {
   private gainNode: GainNode;
   private audioEle = new Audio();
   private nextFade: ChanFadeSave = null;
+  private nextSeek: number | null = null;
   private lastTarget = { endTime: 0, target: 1 };
   private cancelEvName = 'can-' + Math.random().toString(16).substring(2);
   private finishEvName = 'fin-' + Math.random().toString(16).substring(2);
@@ -61,6 +62,10 @@ class MySoundChan {
         this.fade(this.nextFade.durSec, this.nextFade.target);
         this.nextFade = null;
       }
+      if (this.nextSeek) {
+        this.audioEle.currentTime = this.nextSeek;
+        this.nextSeek = null;
+      }
     });
     ctx.createMediaElementSource(this.audioEle).connect(this.gainNode).connect(ctx.destination);
   }
@@ -70,6 +75,7 @@ class MySoundChan {
     this.gainNode.gain.cancelScheduledValues(this.ctx.currentTime);
     this.gainNode.gain.value = 1;
     this.nextFade = null;
+    this.nextSeek = null;
   }
   play(src: string, loop?: boolean, fadeInSec?: number) {
     this.cancel();
@@ -101,8 +107,7 @@ class MySoundChan {
   }
   load(s: ChanSave) {
     this.cancel();
-    if (s.src) this.play(s.src, s.loop);
-    this.audioEle.currentTime = s.time;
+    if (s.src) this.play(s.src, s.loop), this.nextSeek = s.time;
     if (s.fade) this.nextFade = s.fade;
     this.gainNode.gain.value = s.gain;
   }
@@ -112,7 +117,7 @@ class MySoundChan {
       target: this.lastTarget.target
     };
     return {
-      src: this.audioEle.getAttribute('src'),
+      src: this.audioEle.paused ? null : this.audioEle.getAttribute('src'),
       loop: this.audioEle.loop,
       time: this.audioEle.currentTime,
       gain: this.gainNode.gain.value,
