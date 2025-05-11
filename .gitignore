@@ -10,5 +10,6 @@ game_*/**/*.opus
 game_*/scripts.js
 game_hiver/system/search01mask.msk
 make_script/**/*.s
+package.json
 package-lock.json
 node_modules

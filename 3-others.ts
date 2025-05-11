@@ -1,9 +1,9 @@
-type VideoSave = { curr: null | { src: string; mime?: string; t: number } };
+type VideoSave = { curr: null | { src: string; mime?: string; t: number; }; };
 
 class MyVideo {
   root = document.createElement('video');
   finished = Promise.resolve();
-  curr: null | { src: string; mime?: string; resolve: () => void; reject: () => void } = null;
+  curr: null | { src: string; mime?: string; resolve: () => void; reject: () => void; } = null;
   constructor() {
     Object.assign(this.root, { autoplay: true, controls: true });
     Object.assign(this.root.style, G.whStyle, G.videoStyle);
@@ -40,8 +40,8 @@ class MyVideo {
   }
 }
 
-type ChanSave = { src: null | string; loop: boolean; time: number; gain: number; fade: ChanFadeSave };
-type ChanFadeSave = null | { durSec: number; target: number };
+type ChanSave = { src: null | string; loop: boolean; time: number; gain: number; fade: ChanFadeSave; };
+type ChanFadeSave = null | { durSec: number; target: number; };
 
 class MySoundChan {
   private ctx: AudioContext;
@@ -148,15 +148,15 @@ class MySound {
   }
 }
 
-type MyChoice = { text: string; label: string };
-type ChoiceSave = { sels: null | MyChoice[] };
+type MyChoice = { text: string; label: string; };
+type ChoiceSave = { sels: null | MyChoice[]; };
 
 class ChoiceWindow {
   root = document.createElement('div');
   curr: null | MyChoice[] = null;
   result = Promise.reject<string>("don't worry, this is just an initial value");
   private btns = [0, 1, 2, 3, 4, 5].map(() => document.createElement('div'));
-  private prom: null | { resolve: (v: string) => void; reject: () => void } = null;
+  private prom: null | { resolve: (v: string) => void; reject: () => void; } = null;
   constructor() {
     this.root.style.position = 'absolute';
     const c = 'cls-' + Math.random().toString(16).substring(2);
@@ -209,29 +209,48 @@ class ChoiceWindow {
   }
 }
 
-type InvestigateSave = { show: boolean };
+type InvestigateSave = { show: boolean; };
 
 class Investigate {
   root = document.createElement('div');
   curr = false;
   result = Promise.reject<number>("don't worry, this is just an initial value");
-  private prom: null | { resolve: (idx: number) => void; reject: () => void } = null;
+  private cvs: HTMLCanvasElement;
+  private msk: null | Uint8Array = null;
+  private prom: null | { resolve: (idx: number) => void; reject: () => void; } = null;
   constructor() {
     Object.assign(this.root.style, G.whStyle, { position: 'absolute' });
-    this.root.onclick = (ev) => {
-      ev.stopPropagation();
-      this.onclick((ev.target as HTMLElement).dataset.index);
-    };
+    this.root.onclick = (ev) => { ev.stopPropagation(); this.onclick(ev); };
+    this.root.appendChild(this.cvs = document.createElement('canvas'));
+    Object.assign(this.cvs, { width: 1280, height: 720 });
     this.cancel();
   }
-  setSVG(svgText: string) {
-    this.root.innerHTML = svgText;
+  setMsk(mskFile: string) {
+    fetch(mskFile).then(res => res.bytes()).then(msk => {
+      const pixels = new Uint32Array(1280 * 720);
+      const palette = [0];
+      for (let i = 0; i < 16; i++) palette.push(0x7F000000 +
+        Math.round(Math.random() * 3) * 0x600000 +
+        Math.round(Math.random() * 3) * 0x6000 +
+        Math.round(Math.random() * 3) * 0x60
+      );
+      msk.forEach((v, i) => pixels[i] = palette[v]);
+      this.msk = msk;
+      this.cvs.getContext('2d')?.putImageData(
+        new ImageData(new Uint8ClampedArray(pixels.buffer), 1280, 720), 0, 0
+      );
+    });
   }
-  private onclick(indexString?: string) {
-    if (!(indexString && this.curr)) return;
-    const index = parseInt(indexString);
-    if (!Number.isInteger(index)) return;
-    this.prom?.resolve(index);
+  private onclick(ev: MouseEvent) {
+    if (!this.msk) return;
+    const b = this.root.getBoundingClientRect();
+    const x = Math.floor(ev.offsetX / b.width * 1280);
+    const y = Math.floor(ev.offsetY / b.height * 720);
+    const i = y * 1280 + x;
+    if (i >= this.msk.length) return;
+    if (this.msk[i] == 0) return;
+    console.log('investigate: clicked on', this.msk[i]);
+    this.prom?.resolve(this.msk[i] - 1);
     this.prom = null;
     this.cancel();
   }

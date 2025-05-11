@@ -967,25 +967,43 @@ class Investigate {
     root = document.createElement('div');
     curr = false;
     result = Promise.reject("don't worry, this is just an initial value");
+    cvs;
+    msk = null;
     prom = null;
     constructor() {
         Object.assign(this.root.style, G.whStyle, { position: 'absolute' });
-        this.root.onclick = (ev) => {
-            ev.stopPropagation();
-            this.onclick(ev.target.dataset.index);
-        };
+        this.root.onclick = (ev) => { ev.stopPropagation(); this.onclick(ev); };
+        this.root.appendChild(this.cvs = document.createElement('canvas'));
+        Object.assign(this.cvs, { width: 1280, height: 720 });
         this.cancel();
     }
-    setSVG(svgText) {
-        this.root.innerHTML = svgText;
+    setMsk(mskFile) {
+        fetch(mskFile).then(res => res.bytes()).then(msk => {
+            const pixels = new Uint32Array(1280 * 720);
+            const palette = [0];
+            for (let i = 0; i < 16; i++)
+                palette.push(0x7F000000 +
+                    Math.round(Math.random() * 3) * 0x600000 +
+                    Math.round(Math.random() * 3) * 0x6000 +
+                    Math.round(Math.random() * 3) * 0x60);
+            msk.forEach((v, i) => pixels[i] = palette[v]);
+            this.msk = msk;
+            this.cvs.getContext('2d')?.putImageData(new ImageData(new Uint8ClampedArray(pixels.buffer), 1280, 720), 0, 0);
+        });
     }
-    onclick(indexString) {
-        if (!(indexString && this.curr))
+    onclick(ev) {
+        if (!this.msk)
             return;
-        const index = parseInt(indexString);
-        if (!Number.isInteger(index))
+        const b = this.root.getBoundingClientRect();
+        const x = Math.floor(ev.offsetX / b.width * 1280);
+        const y = Math.floor(ev.offsetY / b.height * 720);
+        const i = y * 1280 + x;
+        if (i >= this.msk.length)
             return;
-        this.prom?.resolve(index);
+        if (this.msk[i] == 0)
+            return;
+        console.log('investigate: clicked on', this.msk[i]);
+        this.prom?.resolve(this.msk[i] - 1);
         this.prom = null;
         this.cancel();
     }
@@ -1033,7 +1051,7 @@ class Flowers {
         this.fs = fs;
         this.scriptFiles = scriptFiles;
         if (investigate) {
-            this.inv.setSVG(investigate.svg);
+            this.inv.setMsk(investigate.msk);
             this.investigateScript = investigate.script;
         }
     }
@@ -1266,8 +1284,10 @@ class Flowers {
                         this.jump(G.sys.lblErrInv, G.sys.sysScript);
                         break;
                     }
-                    else
+                    else {
+                        this.dlg.setVisible(false);
                         this.inv.show();
+                    }
                     return void (this.currWait = { k: 'investigate' });
                 case 'zeroInvItemTimes':
                     this.invN = {};
@@ -1520,7 +1540,7 @@ class Flowers {
         { selAdd: { text: '返回启动菜单', label: 'startMenu' } },
         { selAdd: { text: '播放OP视频', label: 'opVideo' } },
         { selAdd: { text: '(冬篇)播放GrandFinale', label: 'hiverGF' } },
-        { selAdd: { text: '测试调查(冬篇)', label: 'testInv' } },
+        { selAdd: { text: '测试调查(非冬篇勿点)', label: 'testInv' } },
         { selEnd: {} },
         'opVideo',
         { video: { kind: 0 } },
@@ -1529,7 +1549,7 @@ class Flowers {
         { video: { kind: 1 } },
         { jump: { label: 'startMenu' } },
         'testInv',
-        { "bg_0f": { filename: '../system/LOGO1.bmp' } },
+        { "bg_0f": { "layer": 1, "filename": "cut08c.bmp" } },
         { "crossfade": { "duration": 1000 } },
         { "dialog": { "text": "私が気付いた、この二人の共通点は二つ――" }, "__afterString": [0, 60, 130, 179] },
         { "varSet": { "idx": 103, "val": 0 } },

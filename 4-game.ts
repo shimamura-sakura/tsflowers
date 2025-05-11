@@ -29,7 +29,7 @@ class Flowers {
   private investigateScript: null | string = null;
   private cancelEvName = 'can-' + Math.random().toString(16).substring(2);
   private finishEvName = 'fin-' + Math.random().toString(16).substring(2);
-  constructor(fs: MyFS, scriptFiles: GameScript, investigate?: { script: string; svg: string; }) {
+  constructor(fs: MyFS, scriptFiles: GameScript, investigate?: { script: string; msk: string; }) {
     Object.assign(this.root.style, G.whStyle, { position: 'relative', transformOrigin: '0 0' });
     this.root.append(this.stg.root, this.dlg.root, this.sel.root, this.inv.root, this.vid.root);
     this.root.addEventListener('click', () => {
@@ -39,7 +39,7 @@ class Flowers {
     this.fs = fs;
     this.scriptFiles = scriptFiles;
     if (investigate) {
-      this.inv.setSVG(investigate.svg);
+      this.inv.setMsk(investigate.msk);
       this.investigateScript = investigate.script;
     }
   }
@@ -247,7 +247,10 @@ class Flowers {
           if (!this.investigateScript) {
             this.jump(G.sys.lblErrInv, G.sys.sysScript);
             break;
-          } else this.inv.show();
+          } else {
+            this.dlg.setVisible(false);
+            this.inv.show();
+          }
           return void (this.currWait = { k: 'investigate' });
         case 'zeroInvItemTimes':
           this.invN = {};
