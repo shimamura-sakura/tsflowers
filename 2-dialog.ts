@@ -2,8 +2,8 @@ type YuriSave = {
   nextTop: string;
   currTop: string;
   prevTop: string;
-  fade: null | { d: number; t: number };
-  flash: null | { d: number; t: number; c: string };
+  fade: null | { d: number; t: number; };
+  flash: null | { d: number; t: number; c: string; };
 };
 
 class YuriGauge {
@@ -11,8 +11,8 @@ class YuriGauge {
   private nextTop = '0px';
   private curr = new Image();
   private prev = new Image();
-  flash: null | { d: number; c: string; a: Animation } = null;
-  fade: null | { d: number; ci: Animation; po: Animation } = null;
+  flash: null | { d: number; c: string; a: Animation; } = null;
+  fade: null | { d: number; ci: Animation; po: Animation; } = null;
   constructor() {
     Object.assign(this.root.style, G.yuriStyle, { overflow: 'hidden' });
     Object.assign(this.curr.style, G.yimgStyle, { opacity: '1', mixBlendMode: 'plus-lighter' });
@@ -93,15 +93,15 @@ class YuriGauge {
   }
 }
 
-type TypingSeg = { k: null | 'rb' | 'rt'; s: string };
-type TypingSave = { html: string; type: null | { orig: string; iseg: number } };
+type TypingSeg = { k: null | 'rb' | 'rt'; s: string; };
+type TypingSave = { html: string; type: null | { orig: string; iseg: number; }; };
 
 class Typewriter {
   root = document.createElement('div');
   finished = Promise.resolve();
   private lastRB: null | HTMLElement = null;
-  private prom: null | { resolve: () => void; reject: () => void } = null;
-  curr: null | { html: string; orig: string; iseg: number; segs: TypingSeg[] } = null;
+  private prom: null | { resolve: () => void; reject: () => void; } = null;
+  curr: null | { html: string; orig: string; iseg: number; segs: TypingSeg[]; } = null;
   static parseOrig(s: string): TypingSeg[] {
     let segs: TypingSeg[] = [];
     let k: null | 'rb' | 'rt' = null;
@@ -188,7 +188,7 @@ type TextDlgSave = {
   person: string;
   nextPerson: string;
   visible: boolean;
-  fade: null | { d: number; t: number };
+  fade: null | { d: number; t: number; };
 };
 
 class TextDlg {
@@ -201,7 +201,7 @@ class TextDlg {
   private hori = document.createElement('div');
   private person = document.createElement('div');
   private visible: boolean;
-  fade: null | { d: number; a: Animation } = null;
+  fade: null | { d: number; a: Animation; } = null;
   constructor(avatar: HTMLElement) {
     this.setVisible((this.visible = false));
     this.root.appendChild(document.createElement('style')).innerText = G.dRubyStyle(

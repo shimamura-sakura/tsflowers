@@ -1,5 +1,5 @@
-type ImgSave = { src: null | string; nextSrc: null | string; style: { [k: string]: string } };
-type ImgSty = { left: string; top: string; scale: string; opacity: string };
+type ImgSave = { src: null | string; nextSrc: null | string; style: { [k: string]: string; }; };
+type ImgSty = { left: string; top: string; scale: string; opacity: string; };
 
 class MyImg extends Image {
   private static Style = ['width', 'height', 'background-color', 'left', 'top', 'scale', 'opacity'];
@@ -27,7 +27,7 @@ class MyImg extends Image {
   async loadSrc() {
     await G.loadImg(this.nextSrc || MyImg.Empty, this);
     try { await this.decode(); } catch { console.log('error loading src'); }
-    return 
+    return;
   }
   async load(s: ImgSave) {
     this.setImage(s.src);
@@ -37,7 +37,7 @@ class MyImg extends Image {
   }
   save() {
     const src = this.getAttribute('src');
-    const style: { [k: string]: string } = {};
+    const style: { [k: string]: string; } = {};
     MyImg.Style.forEach((n) => (style[n] = this.style.getPropertyValue(n)));
     return { src: src == MyImg.Empty ? null : src, nextSrc: this.nextSrc, style };
   }
@@ -47,16 +47,16 @@ class MyImg extends Image {
   }
 }
 
-type AniSave = { f: Keyframe[]; o: { iterations: number; direction: PlaybackDirection; duration: number } };
-type LayAniA = null | { kf0: ImgSty; iterations: number };
-type LayAniB = null | { kf1: ImgSty; direction: PlaybackDirection; duration: number };
+type AniSave = { f: Keyframe[]; o: { iterations: number; direction: PlaybackDirection; duration: number; }; };
+type LayAniA = null | { kf0: ImgSty; iterations: number; };
+type LayAniB = null | { kf1: ImgSty; direction: PlaybackDirection; duration: number; };
 type LayerSave = {
   next: ImgSave;
   curr: ImgSave;
   prev: ImgSave;
   aniA: LayAniA;
   aniB: LayAniB;
-  anim: null | { opts: AniSave; time: number };
+  anim: null | { opts: AniSave; time: number; };
 };
 
 class Layer {
@@ -133,7 +133,7 @@ type AvatarSave = {
   next: ImgSave;
   curr: ImgSave;
   prev: ImgSave;
-  fade: null | { d: number; t: number };
+  fade: null | { d: number; t: number; };
 };
 
 class Avatar {
@@ -141,7 +141,7 @@ class Avatar {
   next = new MyImg();
   private curr = new MyImg();
   private prev = new MyImg();
-  private fade: null | { ci: Animation; po: Animation } = null;
+  private fade: null | { ci: Animation; po: Animation; } = null;
   constructor() {
     Object.assign(this.next.style, { position: 'absolute', opacity: '0', mixBlendMode: 'plus-lighter' });
     Object.assign(this.curr.style, { position: 'absolute', opacity: '1', mixBlendMode: 'plus-lighter' });
@@ -203,16 +203,16 @@ class Avatar {
   }
 }
 
-type ShakeOpts = { duration: number; repeat: number; dist: number };
-type FlashOpts = { duration: number; times: number; color: string };
+type ShakeOpts = { duration: number; repeat: number; dist: number; };
+type FlashOpts = { duration: number; times: number; color: string; };
 
 type StageSave = {
   bg: LayerSave;
   fg: LayerSave[];
   avat: AvatarSave;
-  fade: null | { d: number; t: number };
-  shake: null | { o: ShakeOpts; t: number };
-  flash: null | { o: FlashOpts; t: number };
+  fade: null | { d: number; t: number; };
+  shake: null | { o: ShakeOpts; t: number; };
+  flash: null | { o: FlashOpts; t: number; };
 };
 
 class Stage {
@@ -223,9 +223,9 @@ class Stage {
   private flas = document.createElement('div');
   private bg = new Layer(this.curr, this.prev);
   private fg = [1, 2, 3, 4, 5].map((i) => new Layer(this.curr, this.prev, true));
-  fade: null | { ci: Animation; po: Animation } = null;
-  shake: null | { o: ShakeOpts; a: Animation } = null;
-  flash: null | { o: FlashOpts; a: Animation } = null;
+  fade: null | { ci: Animation; po: Animation; } = null;
+  shake: null | { o: ShakeOpts; a: Animation; } = null;
+  flash: null | { o: FlashOpts; a: Animation; } = null;
   constructor() {
     Object.assign(this.curr.style, { position: 'absolute', opacity: '1', mixBlendMode: 'plus-lighter' });
     Object.assign(this.prev.style, { position: 'absolute', opacity: '0', mixBlendMode: 'plus-lighter' });

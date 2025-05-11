@@ -61,7 +61,7 @@ const G = {
     return img;
   },
   specialScripts: {} as GameScript,
-  sys: {} as { [k: string]: string }
+  sys: {} as { [k: string]: string; }
 };
 
 class MyFS {
