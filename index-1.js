@@ -44,7 +44,7 @@ function myAlert(s) {
       saveToStor();
       savetxt.value = o;
       savebtn.innerText = '已保存!';
-      setTimeout(() => savebtn.innerText = '保存', 1000);
+      setTimeout(() => savebtn.innerText = '保存(S)', 1000);
       doCopy(o);
     });
   };
