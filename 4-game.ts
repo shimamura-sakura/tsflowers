@@ -84,6 +84,7 @@ class Flowers {
         break;
       case 'video':
         if (this.vid.curr) await this.rawWait([this.vid.finished, this.waitClick()], () => this.vid.cancel(true));
+        console.log('video wait normal');
         break;
       case 'clickTime':
         if (Number.isFinite(o)) await this.rawWait([this.waitTime(o), this.waitClick()]);
@@ -143,7 +144,7 @@ class Flowers {
   }
   private async rawWait(waitables: PromiseLike<any>[], finish?: () => void) {
     const prom = Promise.race(waitables);
-    prom.finally(finish);
+    prom.then(finish); // fix for video
     await prom;
   }
   private pc: number = 0;

@@ -765,9 +765,16 @@ class MyVideo {
     root = document.createElement('video');
     finished = Promise.resolve();
     curr = null;
+    nextSeek = null;
     constructor() {
         Object.assign(this.root, { autoplay: true, controls: true });
         Object.assign(this.root.style, G.whStyle, G.videoStyle);
+        this.root.addEventListener('play', () => {
+            if (this.nextSeek) {
+                this.root.currentTime = this.nextSeek;
+                this.nextSeek = null;
+            }
+        });
         this.root.addEventListener('ended', () => this.cancel(true));
         this.root.addEventListener('click', (ev) => ev.stopPropagation());
         this.cancel();
@@ -778,6 +785,7 @@ class MyVideo {
         else
             this.curr?.reject();
         this.curr = null;
+        this.nextSeek = null;
         this.root.style.display = 'none';
         this.root.pause();
     }
@@ -797,7 +805,7 @@ class MyVideo {
         this.cancel();
         if (s.curr) {
             this.play(s.curr.src, this.curr?.mime);
-            this.root.currentTime = s.curr.t;
+            this.nextSeek = s.curr.t;
         }
     }
     save() {
@@ -1112,6 +1120,7 @@ class Flowers {
             case 'video':
                 if (this.vid.curr)
                     await this.rawWait([this.vid.finished, this.waitClick()], () => this.vid.cancel(true));
+                console.log('video wait normal');
                 break;
             case 'clickTime':
                 if (Number.isFinite(o))
@@ -1183,7 +1192,7 @@ class Flowers {
     }
     async rawWait(waitables, finish) {
         const prom = Promise.race(waitables);
-        prom.finally(finish);
+        prom.then(finish);
         await prom;
     }
     pc = 0;

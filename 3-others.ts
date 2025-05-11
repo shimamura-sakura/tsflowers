@@ -4,9 +4,16 @@ class MyVideo {
   root = document.createElement('video');
   finished = Promise.resolve();
   curr: null | { src: string; mime?: string; resolve: () => void; reject: () => void; } = null;
+  private nextSeek: null | number = null;
   constructor() {
     Object.assign(this.root, { autoplay: true, controls: true });
     Object.assign(this.root.style, G.whStyle, G.videoStyle);
+    this.root.addEventListener('play', () => {
+      if (this.nextSeek) {
+        this.root.currentTime = this.nextSeek;
+        this.nextSeek = null;
+      }
+    });
     this.root.addEventListener('ended', () => this.cancel(true));
     this.root.addEventListener('click', (ev) => ev.stopPropagation());
     this.cancel();
@@ -15,6 +22,7 @@ class MyVideo {
     if (finish) this.curr?.resolve();
     else this.curr?.reject();
     this.curr = null;
+    this.nextSeek = null;
     this.root.style.display = 'none';
     this.root.pause();
   }
@@ -32,7 +40,7 @@ class MyVideo {
     this.cancel();
     if (s.curr) {
       this.play(s.curr.src, this.curr?.mime);
-      this.root.currentTime = s.curr.t;
+      this.nextSeek = s.curr.t;
     }
   }
   save(): VideoSave {
