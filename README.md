@@ -24,6 +24,30 @@
    2. 将 script.iga 解压到 make_script/scripts_printemps
    3. 运行 `node main_printemps.js > ../game_printemps/scripts.js` 生成 scripts.js
 3. (冬篇)调查位置
+   无需操作，如果正确解压，`game_hiver/system`下应有`search01mask.msk`文件
+
+# 准备资源(汉化版)
+
+尝试性地迁移了春篇的 Steam 汉化版
+
+1. 图片、视频、音频
+   1. 将相应 IGA 文件(除 script.iga)解压到 game_printemps_cn 的对应文件夹中
+   2. 将视频重新编码为 webm (浏览器不支持原游戏使用的 mpeg)  
+      例: `ffmpeg -i op.mpg -c:v libvpx-vp9 -crf 24 -b:v 0 op.webm`
+      如果之前你做过日文版春篇，也可直接从那边复制，而不用重新编码
+   3. 与日文版一样
+   4. 与日文版一样
+2. 导入汉化版资源
+   1. 如果 FLOWERS.exe 比较大，请用 evbunpack 将它解压，得到 data00-data04.iga
+   2. 或者这几个 iga 文件就在安装目录下
+   3. 将 data01-data03 解压到 game_printemps_cn 的对应文件夹中
+   4. 在 game_printemps_cn 中使用 Python3 运行 make_replace_sh.py
+   5. 将它的输出重定向到一个 sh 文件中，运行
+      (这一步将把加密的文件名还原为原始文件名，并替换对应文件)
+3. 脚本
+   1. 进入 make_script 文件夹，将 data00.iga 解压到 data00_printemps_cn
+   2. 安装依赖 `npm install md5 iconv-lite`
+   3. 运行 `node main_printemps_cn.js > ../game_printemps_cn/scripts.js` 生成 scripts.js
 
 # 编译/运行
 
